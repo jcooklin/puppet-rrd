@@ -13,3 +13,15 @@
 #     You should have received a copy of the GNU General Public License
 #     along with the rrd Puppet module.  If not, see <http://www.gnu.org/licenses/>.
 include rrd
+include rrd::cache
+class pre_rrd () {
+	file { "/var/lib/rrdcached/db":
+		ensure => directory,
+	}
+	file { "/var/lib/rrdcached/journal":
+		ensure => directory,
+	}		
+} 
+class {'pre_rrd': 
+	before => Class['rrd']
+}
